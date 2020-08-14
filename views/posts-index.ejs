@@ -6,7 +6,7 @@
         <ul>
             <% posts.forEach( (post) =>{%>
                 <li class="list-group-item">
-                    <div class="lead"><%=post.title%></div>
+                    <div class="lead"><a href="/posts/<%=post._id%>" ><%=post.title%></a></div>
                     <a href="<%=this.url%> " target="_blank"><%=post.url%></a>
                 </li>
             <%});%>

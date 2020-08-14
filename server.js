@@ -17,14 +17,7 @@ require('./data/reddit-db');
 
 
 
-app.get("/",(req,res)=>{
-     res.render('posts-index');
-});
 
-
-app.get("/posts/new",(req,res)=>{
-  res.render('posts-new');
-});
 
 
 
