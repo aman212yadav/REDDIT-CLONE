@@ -1,0 +1,20 @@
+<%- include("header.ejs")%>
+
+
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+        <ul>
+            <% posts.forEach( (post) =>{%>
+                <li class="list-group-item">
+                    <div class="lead"><%=post.title%></div>
+                    <a href="<%=this.url%> " target="_blank"><%=post.url%></a>
+                </li>
+            <%});%>
+        </ul>
+    </div>
+</div>
+
+
+
+
+<%- include("footer.ejs")%>
