@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const PostSchema = new Schema({
   createdAt: { type: Date },
   updatedAt: { type: Date },
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
   subreddit: { type: String, required: true },
   title: { type: String, required: true },
   url: { type: String, required: true },

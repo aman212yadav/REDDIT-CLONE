@@ -13,7 +13,7 @@ app.use(expressValidator());
 app.set('view engine','ejs');
 require('./controllers/posts.js')(app);
 require('./data/reddit-db');
-
+ require('./controllers/comments.js')(app);
 
 
 
