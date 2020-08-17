@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express=require('express')
 const app=express();
 
@@ -13,7 +15,8 @@ app.use(expressValidator());
 app.set('view engine','ejs');
 require('./controllers/posts.js')(app);
 require('./data/reddit-db');
- require('./controllers/comments.js')(app);
+require('./controllers/comments.js')(app);
+require('./controllers/auth.js')(app)
 
 
 
