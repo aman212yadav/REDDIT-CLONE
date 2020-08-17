@@ -1,9 +1,9 @@
 const Post = require('../models/post');
-
+const User = require("../models/user");
 module.exports = (app) => {
   app.get("/",(req,res)=>{
 
-    Post.find({}).lean()
+    Post.find({}).populate('author')
    .then(posts => {
      console.log(posts);
     res.render("posts-index", { posts});
@@ -16,19 +16,32 @@ module.exports = (app) => {
     res.render('posts-new');
   });
   app.post("/posts/new", (req, res) => {
-    if (req.user) {
-      var post = new Post(req.body);
+      if (req.user) {
+          var post = new Post(req.body);
+          post.author = req.user._id;
 
-      post.save(function(err, post) {
-        return res.redirect(`/`);
-      });
-    } else {
-      return res.status(401); // UNAUTHORIZED
-    }
+          post
+              .save()
+              .then(post => {
+
+                  return User.findById(req.user._id);
+              })
+              .then(user => {
+                  user.posts.unshift(post);
+                  user.save();
+                  // REDIRECT TO THE NEW POST
+                  res.redirect(`/posts/${post._id}`);
+              })
+              .catch(err => {
+                  console.log(err.message);
+              });
+      } else {
+          return res.status(401); // UNAUTHORIZED
+      }
   });
   app.get("/posts/:id",(req,res)=>{
-        Post.findById(req.params.id).populate('comments').then((post)=>{
-          console.log('post'+post);
+        Post.findById(req.params.id).populate('comments').populate('author').then((post)=>{
+
           res.render("posts-show",{post:post});
         })
         .catch(err=> {
@@ -37,6 +50,7 @@ module.exports = (app) => {
   });
   app.get("/n/:subreddit",(req,res)=>{
         Post.find({subreddit:req.params.subreddit})
+        .populate('author')
         .then(posts=> {
           res.render("posts-index",{posts:posts});
         })
