@@ -40,28 +40,22 @@ module.exports = (app) => {
       }
   });
   app.get("/posts/:id",(req,res)=>{
-        Post.findById(req.params.id).
-        populate(
-          {path:'comments',
-           populate:{path:'author'}
-         })
-       .populate('author').then((post)=>{
-
-          res.render("posts-show",{post:post});
-        })
-        .catch(err=> {
-           console.log(err.message);
-        });
+    Post.findById(req.params.id).populate('comments').lean()
+   .then(post => {
+       res.render("posts-show", { post});
+   })
+   .catch(err => {
+       console.log(err.message);
+   });
   });
-  app.get("/n/:subreddit",(req,res)=>{
-        Post.find({subreddit:req.params.subreddit})
-        .populate('author')
-        .then(posts=> {
-          res.render("posts-index",{posts:posts});
-        })
-        .catch(err =>{
-          console.log(err);
-        });
+  app.get("/n/:subreddit",(req,res)=> {
+    Post.find({ subreddit: req.params.subreddit }).lean()
+    .then(posts => {
+        res.render("posts-index", { posts, currentUser });
+    })
+    .catch(err => {
+        console.log(err);
+    });
   });
 
 
