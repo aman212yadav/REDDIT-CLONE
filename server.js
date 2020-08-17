@@ -33,6 +33,7 @@ app.use(checkAuth);
 // Use Body Parser
 
 app.set('view engine','ejs');
+require('./controllers/replies.js')(app);
 require('./controllers/posts.js')(app);
 require('./data/reddit-db');
 require('./controllers/comments.js')(app);

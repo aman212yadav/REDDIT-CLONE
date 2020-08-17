@@ -1,0 +1,9 @@
+<div class="col-xs-12" style="margin-left: 20px">
+    <p><%-comment.content%></p>
+    <p class="text-right"><%=comment.author.username%></p>
+    <a href="/posts/<%=postId%>/comments/<%=comment._id%>/replies/new">Reply</a>
+    <% comment.comments.forEach(comment=>{ %>
+      <%- include('comment.ejs',{comment:comment,postId:postId}); %>
+    <%});%>
+
+</div>

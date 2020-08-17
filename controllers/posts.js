@@ -40,7 +40,7 @@ module.exports = (app) => {
       }
   });
   app.get("/posts/:id",(req,res)=>{
-    Post.findById(req.params.id).populate('comments').lean()
+    Post.findById(req.params.id).populate('comments')
    .then(post => {
        res.render("posts-show", { post});
    })
@@ -49,7 +49,7 @@ module.exports = (app) => {
    });
   });
   app.get("/n/:subreddit",(req,res)=> {
-    Post.find({ subreddit: req.params.subreddit }).lean()
+    Post.find({ subreddit: req.params.subreddit })
     .then(posts => {
         res.render("posts-index", { posts, currentUser });
     })
