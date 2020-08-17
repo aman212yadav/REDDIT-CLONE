@@ -40,7 +40,12 @@ module.exports = (app) => {
       }
   });
   app.get("/posts/:id",(req,res)=>{
-        Post.findById(req.params.id).populate('comments').populate('author').then((post)=>{
+        Post.findById(req.params.id).
+        populate(
+          {path:'comments',
+           populate:{path:'author'}
+         })
+       .populate('author').then((post)=>{
 
           res.render("posts-show",{post:post});
         })

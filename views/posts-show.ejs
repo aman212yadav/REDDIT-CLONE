@@ -27,6 +27,7 @@
   <% post.comments.forEach(function(comment){%>
    <div class="col-6 offset-3">
       <p><%=comment.content%></p>
+       <p class="text-right"><%=post.author.username%></p>
    </div>
    <%})}%>
 </div>
